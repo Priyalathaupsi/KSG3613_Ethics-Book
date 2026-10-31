@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter 5 • Ethics Spin the Wheel</title><style>
+:root{font-family:'Segoe UI',Arial,sans-serif;color:#1e3032;background:#fbf6ec}*{box-sizing:border-box}body{margin:0;padding:clamp(12px,3vw,30px)}main{max-width:900px;margin:auto}h1,h2{font-family:Georgia,serif}h1{font-size:clamp(29px,5vw,46px);margin:4px 0 8px}.sub{color:#5b696a}.board{background:#fff;border:1px solid #e6ddcb;border-radius:18px;padding:clamp(16px,3vw,28px);box-shadow:0 10px 30px #183a3720}.status{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:20px 0;color:#1c5652;font-weight:700}.wheel-box{width:min(350px,85vw);height:min(350px,85vw);margin:30px auto 20px;position:relative}.wheel{width:100%;height:100%;border:10px solid #fff;border-radius:50%;box-shadow:0 3px 0 #205951,0 8px 25px #1b373a30;transition:transform 3.1s cubic-bezier(.12,.72,.13,1);background:conic-gradient(#2a7f78 0deg 60deg,#e4ab52 60deg 120deg,#c9543e 120deg 180deg,#62538c 180deg 240deg,#65a7c6 240deg 300deg,#7b9f63 300deg 360deg);position:relative;overflow:hidden}.wlabel{position:absolute;left:50%;top:50%;width:46%;transform-origin:left center;text-align:center;color:white;text-shadow:0 1px 2px #0008;font-size:clamp(9px,2.1vw,12px);font-weight:800;line-height:1.2;padding:0 2px}.pointer{position:absolute;left:50%;top:-20px;transform:translateX(-50%);z-index:2;font-size:35px;color:#9f3e2b;text-shadow:0 2px 2px #fff}.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:5px solid #1c5652;border-radius:50%;width:62px;height:62px;display:grid;place-items:center;font-size:25px}button{background:#2a7f78;color:white;border:0;border-radius:12px;padding:13px 22px;cursor:pointer;font:700 16px 'Segoe UI',sans-serif}button:disabled{opacity:.5;cursor:not-allowed}.actions{text-align:center}.q{margin-top:20px;padding:20px;border-radius:14px;background:#f4f5f0}.choices{display:grid;gap:9px;margin-top:14px}.choice{text-align:left;background:#fff;color:#1e3032;border:1px solid #cbd3cf;font-weight:500}.choice:hover:not(:disabled){border-color:#2a7f78;background:#e3f1ed}.choice:disabled{opacity:1;cursor:default}.correct{border:2px solid #2a7f78!important;background:#dcf3e8!important}.incorrect{border:2px solid #be564d!important;background:#fae5df!important}.feedback{margin:16px 0;padding:16px;border-radius:12px;background:#e5f1ed}.error{background:#fff0e9}.hidden{display:none!important}.next{margin-top:12px}a{color:#246b66}@media(prefers-reduced-motion:reduce){.wheel{transition:none}}</style></head><body><main><p class="sub">KSG3613 · Ethics in Practice · Chapter 5 Activity</p><h1>🎡 Spin the Wheel</h1><p class="sub">Professional Responsibilities — spin a topic, decide on a realistic professional case, and review why your answer is sound or problematic.</p><div class="board"><div class="status"><span id="progress">Topic 1 of 6</span><span id="score">Correct: 0</span></div><section id="spinView"><div class="wheel-box"><div class="pointer" aria-hidden="true">▼</div><div class="wheel" id="wheel"></div><div class="hub">⚖️</div></div><div class="actions"><p id="announce" aria-live="polite">Select Spin to reveal your first case.</p><button id="spin" type="button">Spin the wheel</button></div></section><section id="caseView" class="hidden"><p id="topic" class="sub"></p><h2 id="question"></h2><div id="choices" class="choices"></div><div id="feedback" class="feedback hidden" aria-live="polite"></div><button id="next" class="next hidden" type="button">Next topic</button></section><section id="resultView" class="hidden"><h2 id="resultTitle"></h2><p id="resultDescription"></p><button id="retry" type="button">Play again</button></section></div><p class="sub">Teaching note: Decisions are presented as scenarios for educational discussion, not as substitute legal or professional advice. Consider applicable law, professional codes, supervision and case-specific risk.</p></main><script>
+const CONGKAK_BANK = [
+
+ {name:"Payment",tempt:"Putting fees first",gist:"Fair, clear fees that never come before welfare",qs:[
+  {q:"Puan Rohana owes RM900 for ten sessions. She is no longer at risk and has stopped answering your calls. Your consent form said nothing about unpaid fees. What is the most defensible next step?",o:[
+    "Send the account to a collection agency, since she signed a form agreeing to your fee and has now stopped responding.",
+    "Write the debt off quietly and keep the door open, so that money never gets in the way of her care.",
+    "Contact her and offer a payment plan, but do not use an agency, as she was never told one might be used.",
+    "Keep her file on hold until the bill is settled, then release a copy promptly if she asks for it."],a:2,
+   why:"A collection agency can only be used if the client was told in advance. Writing off silently avoids a real issue, and holding records over unpaid fees is never acceptable."},
+  {q:"A smallholder in Raub has no cash and offers durian from his orchard as payment. Paying in produce is normal in his community. When would accepting be acceptable?",o:[
+    "When an independent price check shows the market value of the durian matches your usual fee exactly, so neither side gains.",
+    "When he proposes it himself, it is normal in his community, it does not exploit him and the terms are clear.",
+    "Never. Accepting goods for counselling always turns you into his customer as well as his counsellor, which is a dual relationship.",
+    "When you also lower your fee for the produce, so that the exchange clearly favours him rather than you."],a:1,
+   why:"Bartering is not banned outright. It is acceptable only when the client asks for it, it is culturally normal, it does not exploit the client and the terms are clear. Matching values alone is not enough."},
+  {q:"A well qualified psychiatrist offers you RM50 for each client you refer to him. Many of your clients do need medication reviews. What should you do?",o:[
+    "Accept, because you would be referring these clients to him anyway, so the payment does not change any clinical decision.",
+    "Accept, but tell each client about the payment in writing so they can make an informed choice about seeing him.",
+    "Decline the payment, and also stop referring to him so there is no appearance of a private arrangement.",
+    "Decline the payment, and keep referring clients to him whenever their needs call for a medication review."],a:3,
+   why:"Referral fees create a conflict of interest, even when disclosed. Refusing to refer at all overcorrects and harms clients who need him."}]},
+ {name:"Interruption and termination",tempt:"Abandoning clients",gist:"Never abandon a client in need",qs:[
+  {q:"After six months, a client is not improving but says your sessions are the only place she feels heard. You believe another type of therapy would help her more. What is the best course?",o:[
+    "Continue, because ending now would feel like rejection and could undo the trust she has finally built with you.",
+    "Reduce sessions to once a month so that she gradually depends on you less without feeling pushed away.",
+    "Share your view honestly, explore her feelings about ending and help her move to a better suited service.",
+    "End at the next session, explain your reasons kindly and give her a list of other centres she could contact."],a:2,
+   why:"Continuing without benefit is not kind, and an abrupt ending is abandonment. Ending should be discussed, planned and supported."},
+  {q:"A client can no longer pay and is not in crisis. You cannot afford to see him free. Is ending the relationship abandonment?",o:[
+    "Yes. Ending because a client cannot pay puts your income before his welfare, so it is always abandonment.",
+    "No, as long as you send him a clear letter after the last session explaining why the sessions had to stop.",
+    "Yes, unless he has already completed at least half of the sessions you planned together at the start.",
+    "No, provided you discuss it with him well before the last session and help him find affordable services."],a:3,
+   why:"Ending for nonpayment is allowed when the client is not in crisis, it is discussed in advance and a referral is offered. A letter afterwards is too late."},
+  {q:"You run a solo private practice. What should you arrange in case you suddenly die or become unable to work?",o:[
+    "A named colleague who is authorised to access your records, contact your clients and arrange their care.",
+    "An instruction for your family to destroy all client records promptly, so that no one else can ever read them.",
+    "A standing notice on your website telling clients how to collect their own files if the practice closes.",
+    "Nothing formal. Adult clients can find other counsellors on their own, and a plan could risk their privacy."],a:0,
+   why:"A professional will protects clients from sudden abandonment. Family members should not handle confidential records."}]},
+ {name:"Records",tempt:"Careless records",gist:"Accurate, secure and kept long enough",qs:[
+  {q:"An adult client asks to read her file. It includes your early note that she \"may have a personality disorder\", a view you no longer hold. What should you do?",o:[
+    "Remove the old note before she reads it, since keeping an inaccurate label in her file could harm her later.",
+    "Give her a careful written summary instead of the full file, so that early working notes do not upset her.",
+    "Refuse access, because the file is the practice's property and your working notes are written for professionals.",
+    "Allow access, offer to read it through with her and explain how and why your view has changed since then."],a:3,
+   why:"Clients generally have a right to see their records, and records must never be altered afterwards. Adding context is honest; deleting the note is not."},
+  {q:"A client mentions suicidal thoughts, and after assessing her you judge the risk to be low. What should your notes include?",o:[
+    "Nothing about suicide, so that a low risk comment cannot be misread if her records are ever subpoenaed.",
+    "What she said, how you assessed the risk, the reasons for your judgement and the safety plan you agreed.",
+    "A brief line stating \"Suicide risk assessed: low\", since a short note is clear and harder to misinterpret.",
+    "A full transcript of the session, so that every word is on record and nothing can be missed later."],a:1,
+   why:"Risk notes must show your reasoning. A one line verdict cannot be defended, and a full transcript is neither practical nor required."},
+  {q:"You saw a couple together. Now the husband alone asks for a copy of the joint file for his divorce lawyer. What should you do?",o:[
+    "Release only the parts of the file that record what he said, since those are his own words.",
+    "Give it to him, because he was a client in every one of those sessions and has a right to his record.",
+    "Release it only with written consent from both partners, unless a court orders it to be released.",
+    "Refuse permanently, because joint records hold two people's confidences and can therefore never be released."],a:2,
+   why:"A joint file holds both partners' confidences. Both must consent, unless a court orders release. Refusing permanently ignores lawful court orders."}]},
+ {name:"Advertising",tempt:"Deceptive adverts",gist:"Honest, never exploiting or deceiving",qs:[
+  {q:"You hold a PhD in Chemistry and a master's in counselling. How may you present yourself in adverts for your counselling practice?",o:[
+    "Write \"PhD\" after your name instead of \"Dr\" before it, since the letters are accurate and sound less like a medical title.",
+    "Use \"Dr\" freely, because it is a genuine doctorate that you earned and it is not a false claim.",
+    "Use \"Dr\" in printed adverts only, where there is room to list all of your qualifications in full.",
+    "Lead with your counselling degree, and if you mention the PhD, state clearly that it is in Chemistry."],a:3,
+   why:"Using an unrelated doctorate without saying what it is in implies doctoral training in counselling, which misleads the public."},
+  {q:"A former client who ended two years ago and is doing well offers to post a glowing review on your website. What is the main ethical concern?",o:[
+    "There is none, because she ended two years ago, offered freely and is no longer in a professional relationship with you.",
+    "She may still feel obliged to please you, and a public review reveals to everyone that she had counselling.",
+    "Reviews only become a problem if they mention fees or compare you favourably with named colleagues.",
+    "You must edit the review yourself before it is posted, to remove anything that could identify her."],a:1,
+   why:"Former clients can still be open to influence, and a review can expose their history. Editing it yourself makes it misleading."},
+  {q:"You work at a government clinic and run an evening private practice. A clinic client complains about the long waiting list. What should you do?",o:[
+    "Give her your private practice card but make no recommendation, so the choice stays entirely hers.",
+    "Help her within the clinic system, and do not use your clinic post to draw her into your private practice.",
+    "Offer her a private evening appointment, because her welfare matters more than the clinic's waiting list.",
+    "Be honest that clinic services are slow, so she can make an informed choice about private care elsewhere."],a:1,
+   why:"Using an agency position to draw clients into your private practice is a conflict of interest, even when the client is left to choose."}]},
+ {name:"Public statements",tempt:"Therapy on air",gist:"Educate the public; do not do therapy on air",qs:[
+  {q:"On a live radio show, a caller says she hurt herself last night and is frightened. What is the most appropriate response?",o:[
+    "Thank her and move straight to the next caller, because doing therapy on air would be unethical.",
+    "Offer a short supportive counselling session on air, since she reached out and other listeners may benefit.",
+    "Respond with care, give crisis contacts on air and have the producers take her details privately for follow up.",
+    "Ask her on air for her address and phone number so that emergency help can be sent to her straight away."],a:2,
+   why:"You must not do therapy on air, but you cannot ignore someone at risk. Show care, give resources and arrange private follow up."},
+  {q:"After your public talk on stress, someone asks whether she can stop her antidepressants because your tips have helped. What do you say?",o:[
+    "If she feels better, the stress tips may be enough on their own, but she should keep monitoring her mood.",
+    "Suggest she reduces the dose slowly rather than stopping suddenly, while continuing to use the tips.",
+    "Tell her firmly that antidepressants should never be stopped once started, to protect her from relapse.",
+    "Explain that only her doctor can advise on this, and encourage her to raise it at her next appointment."],a:3,
+   why:"Medication advice is outside a counsellor's competence. Saying it should never be stopped is also beyond your role."},
+  {q:"A TV producer asks you to analyse a politician's \"narcissistic traits\" from video clips. What is the best reply?",o:[
+    "Agree, but say clearly on air that it is only your personal opinion and not a professional diagnosis.",
+    "Decline, because counsellors should keep away from news programmes to protect the profession's neutrality.",
+    "Agree, as long as you describe only observable behaviours and avoid naming any specific diagnosis.",
+    "Decline to comment on his mental state, and offer instead to explain narcissism in general terms."],a:3,
+   why:"Commenting on the mental state of someone you have not assessed is unethical, however it is labelled. Media work itself is fine if it educates."}]},
+ {name:"Involuntary commitment",tempt:"Needless force",gist:"Protect safety with the least loss of freedom",qs:[
+  {q:"A client with psychosis refuses medication. He is eating, sleeping and has no thoughts of harming anyone. His family wants him admitted. What is the ethical position?",o:[
+    "Support admission, since his psychosis is untreated and he is unlikely to accept help without it.",
+    "Close the case, because he has the right to refuse treatment and you must respect his decision.",
+    "Refusal alone does not justify admission. Work with him and his family on voluntary options.",
+    "Suggest the family takes him to hospital for a \"check up\", so that qualified doctors can decide what is needed."],a:2,
+   why:"Involuntary admission needs serious danger or inability to care for oneself. Refusing treatment is not enough, and misleading him is dishonest."},
+  {q:"A client says she will jump from her flat tonight. She refuses all voluntary help, and no one can stay with her. What comes next?",o:[
+    "Ask her to sign a written safety agreement, then let her go home with crisis line numbers.",
+    "Start your centre's emergency procedure for urgent assessment, and tell her honestly what you are doing and why.",
+    "Let the session end calmly, then call the police after she leaves so that she does not panic or run.",
+    "Respect her autonomy, book her a session for tomorrow morning and phone her tonight to check on her."],a:1,
+   why:"There is immediate danger and no less restrictive option, so emergency action is justified. A written promise does not keep her safe, and acting behind her back is dishonest."},
+  {q:"After an involuntary admission, the client is furious and says she will never trust a counsellor again. What responsibility do you still have?",o:[
+    "Acknowledge her anger, explain your reasons honestly and help her return to voluntary care when she is ready.",
+    "None. Once she was admitted, responsibility for her care passed fully to the hospital team.",
+    "Explain the decision firmly and clearly until she accepts that it was the right thing to do.",
+    "Transfer her to another counsellor straight away, since trust with you may now be beyond repair."],a:0,
+   why:"The relationship continues after a crisis. Honest repair helps her return to care, while defending yourself or transferring her abruptly does not."}]}
+];
+const items=CONGKAK_BANK.map(e=>({domain:e.name,gist:e.gist,...e.qs[0]}));const $=id=>document.getElementById(id);let order=[],step=0,correct=0,rotation=0,locked=false;const names=CONGKAK_BANK.map(x=>x.name);const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function renderWheel(){const el=$('wheel');el.innerHTML='';names.forEach((n,i)=>{const d=document.createElement('div');d.className='wlabel';const deg=30+i*60;const r=115;d.style.transform=`rotate(${deg}deg) translateX(25px)`;d.style.transformOrigin='0 0';d.style.width='42%';d.style.left='50%';d.style.top='50%';d.style.textAlign='right';const span=document.createElement('span');span.textContent=n;d.appendChild(span);el.appendChild(d)})}
+function reset(){order=shuffle([...items]);step=0;correct=0;rotation=0;locked=false;$('wheel').style.transition='none';$('wheel').style.transform='rotate(0deg)';requestAnimationFrame(()=>requestAnimationFrame(()=>{$('wheel').style.transition='transform 3.1s cubic-bezier(.12,.72,.13,1)'}));$('spinView').classList.remove('hidden');$('caseView').classList.add('hidden');$('resultView').classList.add('hidden');$('spin').disabled=false;$('announce').textContent='Select Spin to reveal your next case.';update()}
+function update(){$('progress').textContent=`Topic ${Math.min(step+1,6)} of 6`;$('score').textContent=`Correct: ${correct}`}
+function showQuestion(){const it=order[step];$('spinView').classList.add('hidden');$('caseView').classList.remove('hidden');$('topic').textContent=it.domain+' · '+it.gist;$('question').textContent=it.q;$('feedback').classList.add('hidden');$('next').classList.add('hidden');const box=$('choices');box.innerHTML='';it.o.forEach((txt,i)=>{const btn=document.createElement('button');btn.type='button';btn.className='choice';btn.textContent=String.fromCharCode(65+i)+'. '+txt;btn.onclick=()=>answer(i);box.appendChild(btn)})}
+function answer(idx){if(locked)return;locked=true;const it=order[step];const ok=idx===it.a;if(ok)correct++;[...$('choices').children].forEach((b,i)=>{b.disabled=true;if(i===it.a)b.classList.add('correct');if(i===idx&&!ok)b.classList.add('incorrect')});$('feedback').className='feedback'+(ok?'':' error');$('feedback').textContent=(ok?'Correct. ':'Not quite. ')+it.why;$('next').classList.remove('hidden');$('next').textContent=step===5?'View results':'Next topic';update()}
+$('spin').onclick=()=>{if($('spin').disabled)return;$('spin').disabled=true;$('announce').textContent='The wheel is spinning…';const index=names.indexOf(order[step].domain);const target=(360-(index*60+30))%360;const current=((rotation%360)+360)%360;rotation+=1440+((target-current+360)%360);$('wheel').style.transform=`rotate(${rotation}deg)`;setTimeout(()=>{if(step>=6)return;$('announce').textContent='Selected: '+order[step].domain;locked=false;showQuestion()},3150)};
+$('next').onclick=()=>{step++;locked=false;if(step===6){$('caseView').classList.add('hidden');$('resultView').classList.remove('hidden');$('resultTitle').textContent=`You scored ${correct} / 6`;$('resultDescription').textContent=correct>=4?'Well done. You met the 4/6 completion target. Review your explanations before proceeding.':'You need at least 4 correct answers to pass. Review the feedback and play again.';try{parent.postMessage({type:'ethics-chapter5-complete',score:correct,total:6,passed:correct>=4},'*')}catch(e){};return}$('caseView').classList.add('hidden');$('spinView').classList.remove('hidden');$('spin').disabled=false;$('announce').textContent='Spin for the next topic.';update()};$('retry').onclick=reset;renderWheel();reset();
+</script></body></html>
